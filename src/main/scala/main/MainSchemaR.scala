@@ -14,7 +14,7 @@ import model.{ArrayR, BooleanR, DoubleR, IntR, LongR, SchemaR, StringR, StructR}
 import scala.collection.JavaConverters._
 import scala.util.Try
 
-object Test extends App {
+object MainSchemaR extends App {
 
   val strRawData = s"""{"nom":"Toto", "age":null, "ts": 1234.1234, "adresse": {"num":1, "rue": "rue de la paix"}}"""
   val jsonRawData = parse(strRawData).getOrElse(Json.Null)
@@ -73,26 +73,5 @@ object Test extends App {
   val avroRecord = createRecord(schema, jsonRawData)
   println(s"SCHEMA AVRO: \n$schema")
   println(avroRecord)
-
-}
-
-
-object TestT extends App{
-
- def intToBase(num: Double, base: Double): Array[Double] = {
-   if(base<1) null
-   else{
-     var result = Array[Double]()
-     if(num<1) result
-     else{
-       val quotient: Double = Math.floor(num/base)
-       val remainder = num%base
-       intToBase(quotient, base)++Array(remainder)
-     }
-   }
- }
-
-  intToBase(6,2).foreach(println)
-
 
 }
