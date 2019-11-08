@@ -1,4 +1,4 @@
-object Main1 extends App {
+object MainFactorial extends App {
 
   def scheme(case0: Int, rec: (Int, Int) => Int)(n: Int): Int = {
     if(n == 0) case0

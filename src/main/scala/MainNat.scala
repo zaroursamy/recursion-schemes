@@ -1,14 +1,9 @@
+import matryoshka.{Algebra, Coalgebra}
+import model.{Nat, Succ, Zero}
 import scalaz.Functor
-import matryoshka._
-import matryoshka.data.Fix
-import matryoshka.implicits._
 
+object MainNat extends App {
 
-sealed trait Nat[T]
-case class Zero[T]() extends Nat[T]
-case class Succ[T](t: T) extends Nat[T]
-
-object Nat extends App {
 
   implicit val functorNat: Functor[Nat] = new Functor[Nat] {
     override def map[A, B](fa: Nat[A])(f: A => B): Nat[B] = fa match {
@@ -37,7 +32,8 @@ object Nat extends App {
   println(multiply(Succ(0), Succ(3))(_*_))
   println(multiply(Succ(2), Succ(3))(_*_))
 
-  val res: Fix[Nat] = Fix(Succ(Fix(Succ(3))))
+  //  val res: Fix[Nat] = Fix(Succ(Fix(Succ(3))))
 
-  println(res.cata(algebraNat))
+  //  println(res)
+  //  println(res.cata(algebraNat))
 }
