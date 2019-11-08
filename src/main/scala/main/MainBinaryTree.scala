@@ -1,3 +1,5 @@
+package main
+
 import matryoshka.data.Fix
 import matryoshka.{Algebra, Coalgebra}
 import model.{BinaryTree, Leaf, Node}

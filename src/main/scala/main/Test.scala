@@ -1,4 +1,4 @@
-package testing
+package main
 
 import io.circe._
 import io.circe.parser._
@@ -9,6 +9,7 @@ import org.apache.avro.Schema.Field
 import org.apache.avro.generic.GenericData
 import scalaz.Functor
 import matryoshka.implicits._
+import model.{ArrayR, BooleanR, DoubleR, IntR, LongR, SchemaR, StringR, StructR}
 
 import scala.collection.JavaConverters._
 import scala.util.Try

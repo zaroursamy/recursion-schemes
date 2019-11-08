@@ -1,3 +1,5 @@
+package main
+
 import matryoshka.{Algebra, Coalgebra}
 import model.{Nat, Succ, Zero}
 import scalaz.Functor

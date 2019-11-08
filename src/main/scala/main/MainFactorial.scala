@@ -1,3 +1,5 @@
+package main
+
 object MainFactorial extends App {
 
   def scheme(case0: Int, rec: (Int, Int) => Int)(n: Int): Int = {

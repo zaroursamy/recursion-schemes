@@ -1,11 +1,9 @@
+package main
+
 import matryoshka.data.Fix
 import matryoshka.{Algebra, Coalgebra}
 import model.{Doll, Matryoshka, Tiny}
 import scalaz.{Functor, INil, NonEmptyList}
-import scalaz.Functor
-import matryoshka._
-import matryoshka.data.Fix
-import matryoshka.implicits._
 
 object MainMatryoshka extends App {
 

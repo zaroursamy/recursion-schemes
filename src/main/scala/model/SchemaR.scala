@@ -1,4 +1,4 @@
-package testing
+package model
 
 sealed trait SchemaR[T]
 final case class StructR[T](fields: Map[String, T]) extends SchemaR[T]

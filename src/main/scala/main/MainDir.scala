@@ -1,6 +1,8 @@
+package main
+
 import matryoshka.data.Fix
-import matryoshka.implicits._
 import matryoshka.{Algebra, Coalgebra}
+import model.{Dir, EndLevel, HighLevel}
 import scalaz.Functor
 
 object MainDir extends App {
