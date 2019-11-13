@@ -4,6 +4,7 @@ import matryoshka.data.Fix
 import matryoshka.{Algebra, Coalgebra}
 import model.{Doll, Matryoshka, Tiny}
 import scalaz.{Functor, INil, NonEmptyList}
+import matryoshka.implicits._
 
 object MainMatryoshka extends App {
 

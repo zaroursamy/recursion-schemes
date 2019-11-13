@@ -4,6 +4,7 @@ import matryoshka.data.Fix
 import matryoshka.{Algebra, Coalgebra}
 import model.{Dir, EndLevel, HighLevel}
 import scalaz.Functor
+import matryoshka.implicits._
 
 object MainDir extends App {
 
