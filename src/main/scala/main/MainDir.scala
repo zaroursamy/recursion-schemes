@@ -36,9 +36,14 @@ object MainDir extends App {
     case HighLevel(_, subLevel) ⇒ 1 + subLevel
   }
 
-  val pathDir: Fix[Dir] = Fix(HighLevel("tabmo-data-team", Fix(HighLevel("zeotap", Fix(EndLevel("aa156584.gz"))))))
-
   val path: Seq[String] = Seq("home", "ubuntu", "Documents", "doc.pdf")
+
+  val pathDir: Fix[Dir] = Fix(HighLevel("tabmo-data-team", Fix(HighLevel("zeotap", Fix(EndLevel("aa156584.gz"))))))
+  val unfixPathDir: Dir[Fix[Dir]] = pathDir.unFix
+  println(unfixPathDir)
+  // HighLevel(tabmo-data-team,Fix(HighLevel(zeotap,Fix(EndLevel(aa156584.gz)))))
+
+  System exit 0
 
   // catamorphisme: déconstruire la structure
   val length: Int = pathDir.cata(algebraDepth)
