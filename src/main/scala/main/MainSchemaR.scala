@@ -9,7 +9,7 @@ import org.apache.avro.Schema.Field
 import org.apache.avro.generic.GenericData
 import scalaz.Functor
 import matryoshka.implicits._
-import model.{ArrayR, BooleanR, DoubleR, IntR, LongR, SchemaR, StringR, StructR}
+import model.{ ArrayR, BooleanR, DoubleR, IntR, LongR, SchemaR, StringR, StructR }
 
 import scala.collection.JavaConverters._
 import scala.util.Try
@@ -18,7 +18,7 @@ object MainSchemaR extends App {
 
   val strRawData = s"""{"nom":"Toto", "age":null, "ts": 1234.1234, "adresse": {"num":1, "rue": "rue de la paix"}}"""
   val jsonRawData = parse(strRawData).getOrElse(Json.Null)
-  val ruleJsonSchemaR: Fix[SchemaR] = Fix(StructR(Map("nom" -> Fix(StringR()), "age" -> Fix(IntR(true)), "ts" -> Fix(DoubleR()), "rue" -> Fix(StructR(Map("num"->Fix(IntR()), "rue" -> Fix(StringR())))))))
+  val ruleJsonSchemaR: Fix[SchemaR] = Fix(StructR(Map("nom" -> Fix(StringR()), "age" -> Fix(IntR(true)), "ts" -> Fix(DoubleR()), "rue" -> Fix(StructR(Map("num" -> Fix(IntR()), "rue" -> Fix(StringR())))))))
 
   /* FUNCTOR */
   implicit val schemaRFunctor: Functor[SchemaR] = new Functor[SchemaR] {
@@ -48,14 +48,15 @@ object MainSchemaR extends App {
     val fieldType: Schema.Type = f.schema.getType
 
     def mapFT(ft: Schema.Type): Any = ft match {
-      case Schema.Type.STRING  ⇒ json.hcursor.get[String](f.name).toOption.getOrElse(null)
-      case Schema.Type.INT     ⇒ json.hcursor.get[Int](f.name).toOption.getOrElse(null)
-      case Schema.Type.LONG    ⇒ json.hcursor.get[Long](f.name).toOption.getOrElse(null)
-      case Schema.Type.DOUBLE  ⇒ json.hcursor.get[Double](f.name).toOption.getOrElse(null)
-      case Schema.Type.BOOLEAN ⇒ json.hcursor.get[Boolean](f.name).toOption.getOrElse(null)
-      case Schema.Type.NULL    ⇒ null
-      case Schema.Type.UNION   ⇒ f.schema.getTypes.asScala.flatMap(sc ⇒ Try(mapFT(sc.getType)).toOption).find(x ⇒ x != null).getOrElse(null)
-      case Schema.Type.ARRAY   ⇒ json.hcursor.get[Array[Int]](f.name).toOption.getOrElse(Nil)
+      case Schema.Type.STRING           ⇒ json.hcursor.get[String](f.name).toOption.getOrElse(null)
+      case Schema.Type.INT              ⇒ json.hcursor.get[Int](f.name).toOption.getOrElse(null)
+      case Schema.Type.LONG             ⇒ json.hcursor.get[Long](f.name).toOption.getOrElse(null)
+      case Schema.Type.DOUBLE           ⇒ json.hcursor.get[Double](f.name).toOption.getOrElse(null)
+      case Schema.Type.BOOLEAN          ⇒ json.hcursor.get[Boolean](f.name).toOption.getOrElse(null)
+      case Schema.Type.NULL             ⇒ null
+      case Schema.Type.UNION            ⇒ f.schema.getTypes.asScala.flatMap(sc ⇒ Try(mapFT(sc.getType)).toOption).find(x ⇒ x != null).getOrElse(null)
+      case Schema.Type.ARRAY            ⇒ json.hcursor.get[Array[Int]](f.name).toOption.getOrElse(Nil)
+      case recType @ Schema.Type.RECORD ⇒ ???
     }
     mapFT(fieldType)
 

@@ -1,9 +1,9 @@
 package main
 
 import matryoshka.data.Fix
-import matryoshka.{Algebra, Coalgebra}
-import model.{BinaryTree, Leaf, Node}
-import scalaz.{Functor, INil, NonEmptyList}
+import matryoshka.{ Algebra, Coalgebra }
+import model.{ BinaryTree, Leaf, Node }
+import scalaz.{ Functor, INil, NonEmptyList }
 
 object MainBinaryTree extends App {
 
