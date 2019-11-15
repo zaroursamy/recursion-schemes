@@ -12,10 +12,10 @@ object MainFactorial extends App {
   //    }
   //  }
 
-  def schema[A](baseCase: A, rec: (Int, A) ⇒ A)(n: Int): A = {
+  def scheme[A](baseCase: A, rec: (Int, A) ⇒ A)(n: Int): A = {
     if (n == 0) baseCase
     else {
-      val r = schema(baseCase, rec)(n - 1)
+      val r = scheme(baseCase, rec)(n - 1)
       rec(n, r)
     }
   }
@@ -30,6 +30,8 @@ object MainFactorial extends App {
     res
   }
 
+  println(schemaOptimize(None, (i: Int, xs: Option[Int]) ⇒ Some(xs.getOrElse(0) + i))(10)) // 55
+
   def time[T](f: ⇒ T): T = {
     val t0 = Instant.now.toEpochMilli
     val res = f
@@ -37,25 +39,9 @@ object MainFactorial extends App {
     res
   }
 
-  def factorial(n: Int): Int = time(schema[Int](1, _ * _)(n))
+  def factorial(n: Int): Int = time(scheme[Int](1, _ * _)(n))
   def factorialOptimize(n: Int): Int = time(schemaOptimize[Int](1, _ * _)(n))
-  def sum(n: Int): Int = schema[Int](0, _ + _)(n)
-  def isPair(n: Int) = schema[Boolean](true, (_, b: Boolean) ⇒ !b)(n)
-
-  //  val integersList = schema[Seq[Int]](Nil, (i, seq) ⇒ seq :+ i)(10)
-  //  val stringConcat = schema[Seq[String]](Nil, (i, seq) ⇒ i.toString +: seq)(10)
-  //  val factorial4 = factorial(4)
-  //  val sum4 = sum(4)
-  //  val isPair3 = isPair(3)
-  //
-  //  println(factorial4)
-  //  println(sum4)
-  //  println(isPair3)
-
-  println("basic")
-  println(factorial(25))
-
-  println("optimize")
-  println(factorialOptimize(25))
+  def sum(n: Int): Int = scheme[Int](0, _ + _)(n)
+  def isPair(n: Int) = scheme[Boolean](true, (_, b: Boolean) ⇒ !b)(n)
 
 }
