@@ -1,8 +1,10 @@
 package main
 
+import matryoshka.data.Fix
 import matryoshka.{ Algebra, Coalgebra }
 import model.{ Nat, Succ, Zero }
 import scalaz.Functor
+import matryoshka.implicits._
 
 object MainNat extends App {
 
@@ -30,8 +32,10 @@ object MainNat extends App {
     }
   }
 
-  println(multiply(Succ(0), Succ(3))(_ * _))
-  println(multiply(Succ(2), Succ(3))(_ * _))
+  println(3.ana[Fix[Nat]](coalgebraNat))
+  //
+  //  println(multiply(Succ(0), Succ(3))(_ * _))
+  //  println(multiply(Succ(2), Succ(3))(_ * _))
 
   //  val res: Fix[Nat] = Fix(Succ(Fix(Succ(3))))
 
