@@ -11,41 +11,47 @@ object MainIntList extends App {
 
   implicit val listFunc = new Functor[IntList] {
     override def map[A, B](fa: IntList[A])(f: A ⇒ B): IntList[B] = fa match {
-      case Empty()          ⇒ Empty[B]()
-      case Cons(head, tail) ⇒ Cons(head, f(tail))
+      case Empty()                  ⇒ Empty[B]()
+      case Cons(head: Int, tail: A) ⇒ Cons(head, f(tail))
     }
   }
 
-  val coalgebraIntList: Coalgebra[IntList, Int] = {
+  val coalgebraInt: Coalgebra[IntList, Int] = {
     case 0 ⇒ Empty()
     case n ⇒ Cons(n, n - 1)
   }
 
-  val productIntList: Algebra[IntList, Int] = {
-    case Empty()          ⇒ 1
-    case Cons(head, tail) ⇒ head * tail
-  }
-
-  val sumIntList: Algebra[IntList, Int] = {
-    case Empty()          ⇒ 0
-    case Cons(head, tail) ⇒ head + tail
-  }
-
-  val boolIntList: Algebra[IntList, Boolean] = {
-    case Empty()       ⇒ true
-    case Cons(_, tail) ⇒ !tail
-  }
-
-  val listIntList: Algebra[IntList, List[Int]] = {
-    case Empty()          ⇒ Nil
-    case Cons(head, tail) ⇒ head +: tail
-  }
-
-  val coalList: Coalgebra[IntList, List[Int]] = {
+  val coalgebraListInt: Coalgebra[IntList, List[Int]] = {
     case Nil      ⇒ Empty()
     case x :: Nil ⇒ Cons(x, Nil)
     case x :: xs  ⇒ Cons(xs.last, x +: xs.reverse.tail.reverse)
   }
 
-  println(4.hylo(listIntList, coalgebraIntList) /*.ana[Fix[IntList]](coalgebraIntList).cata(listIntList)*/ .ana[Fix[IntList]](coalList))
+  val algebraProduct: Algebra[IntList, Int] = {
+    case Empty()          ⇒ 1
+    case Cons(head, tail) ⇒ head * tail
+  }
+
+  val algebraSum: Algebra[IntList, Int] = {
+    case Empty()          ⇒ 0
+    case Cons(head, tail) ⇒ head + tail
+  }
+
+  val algebraBool: Algebra[IntList, Boolean] = {
+    case Empty()       ⇒ true
+    case Cons(_, tail) ⇒ !tail
+  }
+
+  val algebraList: Algebra[IntList, List[Int]] = {
+    case Empty()          ⇒ Nil
+    case Cons(head, tail) ⇒ head +: tail
+  }
+
+  def factorial(n: Int) = n.hylo(algebraProduct, coalgebraInt)
+  def sum(n: Int) = n.hylo(algebraSum, coalgebraInt)
+  def even(n: Int) = n.hylo(algebraBool, coalgebraInt)
+  factorial(4) // 24
+  sum(4) // 10
+  even(4) // true
+
 }
